@@ -1,6 +1,7 @@
 import User from "../models/User";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import Email from '../utils/Email'
 
 const getAll = async (req, res) => {
   try {
@@ -23,25 +24,25 @@ const getAll = async (req, res) => {
 
 const register = async (req, res) => {
   try {
-    let { username, name, phone, password, role } = req.body;
+    let { email, name, phone, password, role } = req.body;
 
     let userExists = await User.findOne({
       where: {
-        username
+        email
       }
     });
 
     if (userExists) {
       return res.status(200).send({
         type: 'error',
-        message: 'Já existe um usuário cadastrado com esse username!'
+        message: 'Já existe um usuário cadastrado com esse e-mail!'
       });
     }
 
     let passwordHash = await bcrypt.hash(password, 10);
 
     let response = await User.create({
-      username,
+      email,
       name,
       phone,
       passwordHash,
@@ -64,11 +65,11 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    let { username, password } = req.body;
+    let { email, password } = req.body;
 
     let user = await User.findOne({
       where: {
-        username
+        email
       }
     });
 
@@ -80,7 +81,7 @@ const login = async (req, res) => {
     }
 
     let token = jwt.sign(
-      { userId: user.id, username: user.username }, //payload - dados utilizados na criacao do token
+      { userId: user.id, email: user.email, role: user.role }, //payload - dados utilizados na criacao do token
       process.env.TOKEN_KEY, //chave PRIVADA da aplicação 
       { expiresIn: '1h' } //options ... em quanto tempo ele expira...
     );
@@ -102,8 +103,13 @@ const login = async (req, res) => {
   }
 }
 
+const recovery = async (req, res) => {
+  return await Email.send(req, res);
+}
+
 export default {
   getAll,
   register,
-  login
+  login,
+  recovery
 }
