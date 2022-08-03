@@ -3,7 +3,7 @@ import { sequelize } from "../config";
 import Order from "./Order";
 import Item from "./Item";
 
-const OrderItems = sequelize.define(
+const OrderItem = sequelize.define(
   'order_items',
   {
     id: {
@@ -39,7 +39,7 @@ const OrderItems = sequelize.define(
 );
 
 Order.belongsToMany(Item, { 
-  through: OrderItems,
+  through: OrderItem,
   as: 'items',
   foreignKey: {
     name: 'orderId',
@@ -49,7 +49,7 @@ Order.belongsToMany(Item, {
 });
 
 Item.belongsToMany(Order, {
-  through: OrderItems,
+  through: OrderItem,
   as: 'order',
   foreignKey: {
     name: 'itemId',
@@ -58,4 +58,4 @@ Item.belongsToMany(Order, {
   }
 });
 
-export default OrderItems;
+export default OrderItem;

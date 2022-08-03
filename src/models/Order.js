@@ -1,7 +1,8 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config";
+import Address from "./Address"
 import PaymentMethod from "./PaymentMethod";
-import ShippingOption from "./ShippingOptions";
+import ShippingOption from "./ShippingOption";
 import Status from "./Status";
 import User from "./User";
 
@@ -70,6 +71,17 @@ Order.belongsTo(Status, {
     name: 'statusId',
     field: 'status_id',
     allowNull: false
+  }
+});
+
+Order.belongsTo(Address, {
+  as: 'address',
+  onDelete: 'NO ACTION',
+  onUpdate: 'NO ACTION',
+  foreignKey: {
+    name: 'addressId',
+    field: 'address_id',
+    allowNull: true
   }
 });
 

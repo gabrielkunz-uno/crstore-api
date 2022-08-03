@@ -29,11 +29,6 @@ export default async (req, res, next) => {
       })
     }
 
-    let onlyAdminPaths = [
-      '/items/destroy',
-      '/items/persist'
-    ];
-
     const user = await User.findOne({
       where: {
         id: decodedToken.userId
@@ -44,13 +39,6 @@ export default async (req, res, next) => {
       return res.status(200).send({
         type: 'error',
         message: 'Usuário não encontrado'
-      })
-    }
-
-    if (onlyAdminPaths.includes(req.route.path) && user.role !== 'admin') {
-      return res.status(200).send({
-        type: 'error',
-        message: 'Você não tem permissão para acessar esse recurso!'
       })
     }
 

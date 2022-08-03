@@ -2,7 +2,7 @@ import User from "./User";
 import Address from "./Address";
 import Category from "./Category";
 import Status from "./Status";
-import ShippingOption from "./ShippingOptions";
+import ShippingOption from "./ShippingOption";
 import PaymentMethod from "./PaymentMethod";
 import Item from "./Item";
 import Order from "./Order";
