@@ -14,6 +14,10 @@ const Item = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false
     },
+    additionalInfo: {
+      type: DataTypes.TEXT,
+      field: 'additional_info'
+    },
     price: {
       type: DataTypes.NUMERIC(15,2),
       allowNull: false,
@@ -27,12 +31,20 @@ const Item = sequelize.define(
       defaultValue: false
     },
     promotionalPrice: {
-      field: 'promotional_price',
-      type: DataTypes.NUMERIC(15,2)
+      type: DataTypes.NUMERIC(15,2),
+      field: 'promotional_price'
     },  
     imageURL: {
       type: DataTypes.TEXT,
       field: 'image_url'
+    },
+    stockAvailable: {
+      type: DataTypes.NUMERIC(15,4),
+      allowNull: false,
+      validate: {
+        min: 0
+      },
+      field: 'stock_available'
     },
     inactive: {
       type: DataTypes.BOOLEAN,

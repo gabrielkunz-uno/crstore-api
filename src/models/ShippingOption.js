@@ -14,6 +14,11 @@ const ShippingOption = sequelize.define(
       allowNull: false,
       unique: true
     },
+    type: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: 'delivery' //pickup ou delivery
+    },
     inactive: {
       type: DataTypes.BOOLEAN,
       allowNull: false,

@@ -20,7 +20,11 @@ const Order = sequelize.define(
       validate: {
         min: 0
       }
-    }
+    },
+    additionalInfo: {
+      type: DataTypes.TEXT,
+      field: 'additional_info'
+    },
   },
   {
     freezeTableName: true,

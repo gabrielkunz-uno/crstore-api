@@ -1,19 +1,19 @@
-import ShippingOption from "../models/ShippingOption";
+import Item from "../models/Item";
 
 const get = async (req, res) => {
   try {
     let id = req.params.id ? req.params.id.toString().replace(/\D/g, '') : null;
 
     if (!id) {
-      let response = await ShippingOption.findAll();
+      let response = await Item.findAll();
       return res.status(200).send({
         type: 'success',
         message: 'Registros carregados com sucesso',
-        data: response  
+        data: response 
       });
     };
 
-    let response = await ShippingOption.findOne({ where: { id } });
+    let response = await Item.findOne({ where: { id } });
 
     if (!response) {
       return res.status(200).send({
@@ -32,7 +32,7 @@ const get = async (req, res) => {
     return res.status(200).send({
       type: 'error',
       message: `Ops! Ocorreu um erro`,
-      error: error.message 
+      error: error
     });
   }
 }
@@ -56,12 +56,18 @@ const persist = async (req, res) => {
 }
 
 const create = async (dados, res) => {
-  let { description, inactive, type } = dados;
+  let { description, additionalInfo, price, promotional, promotionalPrice, imageURL, stockAvailable, inactive, categoryId } = dados;
 
-  let response = await ShippingOption.create({
+  let response = await Item.create({
     description,
+    additionalInfo,
+    price,
+    promotional,
+    promotionalPrice,
+    imageURL,
+    stockAvailable,
     inactive,
-    type
+    categoryId
   });
 
   return res.status(200).send({
@@ -72,7 +78,7 @@ const create = async (dados, res) => {
 }
 
 const update = async (id, dados, res) => {
-  let response = await ShippingOption.findOne({ where: { id } });
+  let response = await Item.findOne({ where: { id } });
 
   if (!response) {
     return res.status(200).send({
@@ -103,7 +109,7 @@ const destroy = async (req, res) => {
       });
     }
 
-    let response = await ShippingOption.findOne({ where: { id } });
+    let response = await Item.findOne({ where: { id } });
 
     if (!response) {
       return res.status(200).send({

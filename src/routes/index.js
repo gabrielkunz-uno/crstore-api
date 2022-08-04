@@ -5,6 +5,7 @@ import addressesRoute from "./addressesRoute";
 import paymentMethodsRoute from "./paymentMethodsRoute";
 import shippingOptionsRoute from "./shippingOptionsRoute";
 import ordersRoute from "./ordersRoute";
+import itemsRoute from "./itemsRoute";
 
 function Routes(app) {
 	usersRoute(app);
@@ -14,6 +15,7 @@ function Routes(app) {
 	paymentMethodsRoute(app);
 	shippingOptionsRoute(app);
 	ordersRoute(app);
+	itemsRoute(app);
 }
 
 export default Routes;

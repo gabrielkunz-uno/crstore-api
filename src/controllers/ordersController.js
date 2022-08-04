@@ -1,3 +1,4 @@
+import Item from '../models/Item';
 import Order from '../models/Order';
 import OrderItem from '../models/OrderItems';
 import usersController from './usersController';
@@ -71,27 +72,52 @@ const create = async (req, res) => {
       })
     }
 
-    let { total, paymentMethodId, shippingOptionId, statusId, addressId, items } = req.body;
+    let { paymentMethodId, shippingOptionId, statusId, addressId, items, additionalInfo } = req.body;
 
     let response = await Order.create({
       userId: user.id,
-      total,
+      total: 0.00,
       paymentMethodId,
       shippingOptionId,
       statusId,
-      addressId
+      addressId,
+      additionalInfo
     });
 
+    let total = 0;
+
     for (const item of items) {
-      await OrderItem.create({
+
+      let entity = await Item.findOne({
+        where: {
+          id: item.itemId
+        }
+      });
+
+      if (!entity) {
+        await response.destroy();
+        return res.status(200).send({
+          type: 'error',
+          message: `Ops! Parece que um dos itens do pedido não está mais disponível`,
+          data: []
+        });
+      }
+
+      let price = entity.promotional ? Number(entity.promotionalPrice) : Number(entity.price); 
+
+      let orderItem = await OrderItem.create({
         orderId: response.id,
         itemId: item.itemId,
-        price: item.price,
-        amount: item.amount,
-        total: item.total
+        price: price,
+        amount: Number(item.amount),
+        total: Number(item.amount * price).toFixed(2)
       });
+
+      total = Number(total) + Number(orderItem.total);
     }
 
+    response.total = total;
+    response.save();
     let orderItems = await response.getItems();
     let order = response.toJSON();
     order.items = orderItems;
