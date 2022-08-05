@@ -6,4 +6,5 @@ export default (app) => {
 	app.post('/users/register', controller.register)
 	app.post('/users/login', controller.login)
 	app.get('/users/recovery', controller.recovery)
+	app.get('/users/validate-token', controller.validateToken)
 }
