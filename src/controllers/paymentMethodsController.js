@@ -85,7 +85,7 @@ const update = async (id, dados, res) => {
 
   await response.save();
   return res.status(200).send({
-    type: 'sucess',
+    type: 'success',
     message: `Registro id ${id} atualizado com sucesso`,
     data: response
   });
