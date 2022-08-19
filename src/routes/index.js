@@ -6,6 +6,7 @@ import paymentMethodsRoute from "./paymentMethodsRoute";
 import shippingOptionsRoute from "./shippingOptionsRoute";
 import ordersRoute from "./ordersRoute";
 import itemsRoute from "./itemsRoute";
+import cartRoute from "./cartRoute";
 
 function Routes(app) {
 	usersRoute(app);
@@ -16,6 +17,7 @@ function Routes(app) {
 	shippingOptionsRoute(app);
 	ordersRoute(app);
 	itemsRoute(app);
+	cartRoute(app);
 }
 
 export default Routes;

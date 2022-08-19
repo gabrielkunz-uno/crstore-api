@@ -8,6 +8,7 @@ import Item from "./Item";
 import Order from "./Order";
 import OrderItems from "./OrderItems";
 import OrderStatus from "./OrderStatus";
+import Cart from "./Cart";
 
 (async () => {
   // await User.sync({ force: true })
@@ -20,4 +21,5 @@ import OrderStatus from "./OrderStatus";
   // await Order.sync({ force: true })
   // await OrderItems.sync({ force: true })
   // await OrderStatus.sync({ force: true })
+  // await Cart.sync({ force: true })
 })();
